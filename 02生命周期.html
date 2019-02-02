@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="修改msg" @click="msg2='No'">
+      <h1 id="h1">{{msg2}}</h1>
+    </div>
+    <script>
+        new Vue({
+            el:"#app",
+            // template:"<p>{{this.msg}}</p>",
+            data:{
+                msg:"hello world",
+                msg2:"我需要改变"
+            },
+            //实例被创建成执行, data和methods没有被初始化
+            beforeCreate() {
+                console.log('beforeCreate')
+            },
+            // data和methods已经被初始化
+            created() {
+                console.log('created')
+                console.log(this.$el)
+            },
+            // 模板已经创建好，但尚未把模板渲染
+            beforeMount(){
+                console.log("beforeMount")
+            },
+            // 内存中的模板已经挂载到页面,用户可以看到渲染好的页面
+            mounted() {
+                console.log('mounted'),
+                console.log(this.$el)
+            },
+             //vm.$destroy()  当这个函数被执行时，会执行 beforeDestroy，  destroyed二个函数
+            beforeDestroy() {
+                console.log('beforeDestroy')
+            },
+            destroyed() {
+                console.log("destroyed")
+            },
+            // 页面上的数据没有被修改，data中的数据已经被修改
+            beforeUpdate() {
+                console.log("界面上的元素"+document.getElementById('h1').innerText)
+                console.log("data中的数据" + this.msg2)
+            },
+            // 页面上的数据被修改，data中的数据被修改
+            updated() {
+                console.log("界面上的元素"+document.getElementById('h1').innerText)
+                console.log("data中的数据" + this.msg2)
+            },
+        })
+    </script>
+</body>
+</html>
